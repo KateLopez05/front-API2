@@ -22,8 +22,8 @@ export default function Productoras() {
 
   const consultarTodo = async () => {
     try {
-      const { datos } = await consultarProduct(estado)
-      setProductoras(datos)
+      const { data } = await consultarProduct(estado)
+      setProductoras(data)
       if (error) {
         setError(false)
       }

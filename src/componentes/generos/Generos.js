@@ -21,8 +21,8 @@ export default function Generos() {
 
     const consultarTodo = async ()=>{
         try {
-            const {datos} = await consultarGeneros(estado)
-            setGeneros(datos)
+            const {data} = await consultarGeneros(estado)
+            setGeneros(data)
             if(error){
                 setError(false)
             }

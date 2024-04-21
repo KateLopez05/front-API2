@@ -1,59 +1,72 @@
-import React, { useEffect } from 'react'
-import { consultarMedias } from '../../servicios/MedServicios'
+import React, { useEffect, useState } from 'react'
+import { consultarMedias, crearMedia } from '../../servicios/MedServicios'
+
+import Generos from '../generos/Generos'
+import Directores from '../directores/Directores'
+import Productora from '../productoras/Productoras'
+import Tipos from '../tipos/Tipos'
 
 export default function Medias() {
 
+  const [setMedias] = useState([])
+  const [error, setError] = useState(false)
+  const [media, setMedia] = useState({
+    serial: '',
+    titulo: '',
+    sinopsis: '',
+    url: '',
+    imagen: '',
+    genero: Generos(),
+    director: Directores(),
+    productora: Productora(),
+    tipo: Tipos()
+  })
+
   useEffect(() => {
     consultarTodo()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
 
   const consultarTodo = async () => {
     try {
-      const { datos } = await consultarMedias()
-      console.log(datos)
+      const { data } = await consultarMedias()
+      setMedias(data)
+      if (error) {
+        setError(false)
+      }
     } catch (e) {
       console.error(e)
+      setError(true)
     }
   }
-  return (
-    <div className="row row-cols-1 row-cols-md-2 g-4">
-      <div className="col">
-        <div className="card">
-          <img src="..." className="card-img-top" alt="..."/>
-            <div className="card-body">
-              <h5 className="card-title">Card title</h5>
-              <p className="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            </div>
-        </div>
-      </div>
-      <div className="col">
-        <div className="card">
-          <img src="..." className="card-img-top" alt="..."/>
-            <div className="card-body">
-              <h5 className="card-title">Card title</h5>
-              <p className="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            </div>
-        </div>
-      </div>
-      <div className="col">
-        <div className="card">
-          <img src="..." className="card-img-top" alt="..."/>
-            <div className="card-body">
-              <h5 className="card-title">Card title</h5>
-              <p className="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
-            </div>
-        </div>
-      </div>
-      <div className="col">
-        <div className="card">
-          <img src="..." className="card-img-top" alt="..."/>
-            <div className="card-body">
-              <h5 className="card-title">Card title</h5>
-              <p className="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            </div>
-        </div>
-      </div>
-    </div>
-  )
+
+  const handleChange = e => {
+    setMedia({
+      ...media,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const guardado = async () => {
+    try {
+      const respuesta = await crearMedia(media)
+      consultarTodo()
+      setMedia({
+        serial: '',
+        titulo: '',
+        sinopsis: '',
+        url: '',
+        imagen: '',
+        genero: Generos(),
+        director: Directores(),
+        productora: Productora(),
+        tipo: Tipos()
+      })
+      setMedia(true)
+      console.log(respuesta)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }

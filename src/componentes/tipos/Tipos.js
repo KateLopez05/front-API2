@@ -19,8 +19,8 @@ export default function Tipos() {
 
   const consultarTodo = async () => {
     try {
-      const { datos } = await consultarTipos()
-      setTipo(datos)
+      const { data } = await consultarTipos()
+      setTipo(data)
       if (error) {
         setError(false)
       }

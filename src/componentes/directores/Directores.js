@@ -22,8 +22,8 @@ export default function Directores() {
 
   const consultarTodo = async () => {
     try {
-      const { datos } = await consultarDirectores(estado)
-      setDirectores(datos)
+      const { data } = await consultarDirectores(estado)
+      setDirectores(data)
       if(error){
         setError(true)
       }

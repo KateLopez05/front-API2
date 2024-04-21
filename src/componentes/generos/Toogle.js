@@ -8,7 +8,7 @@ export default function Toggle({ changeState, estado }) {
                 type="checkbox"
                 role="switch"
                 id="flexSwitchCheckChecked" checked={estado} />
-            <label class="form-check-label"
+            <label className="form-check-label"
                 for="flexSwitchCheckChecked">
                 Activo/Inactivo
             </label>
